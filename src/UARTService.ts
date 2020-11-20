@@ -22,11 +22,9 @@ export class UARTService {
       this.message += partOfMessage;
     }
     if (this.message.slice(-1) === "}") {
-      console.log("done", this.message);
+      const { s1, s2 } = JSON.parse(this.message);
+      console.log({ s1, s2 });
       this.message = "";
     }
-    console.log("wip", this.message);
-    // const { s1, s2 } = JSON.parse(data);
-    // console.log({ s1, s2 });
   };
 }
