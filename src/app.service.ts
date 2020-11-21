@@ -11,7 +11,6 @@ export class AppService {
   pompWater(valveState: number) {
     this.uartService.pompWater(valveState);
     return { state: "success" };
-    // return this.repository.createLog({ timestamp, valveState });
   }
   getLogs(sensorId: string) {
     return this.repository.getLogs(sensorId);

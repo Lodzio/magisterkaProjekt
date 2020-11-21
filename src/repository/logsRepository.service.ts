@@ -17,7 +17,6 @@ export class LogsRepository {
   }
 
   getLogs(sensorId: string): Promise<LogClassEntity[]> {
-    console.log(sensorId);
     this.repository.find().then(console.log);
     return this.repository.find({ where: { sensorId } });
   }
