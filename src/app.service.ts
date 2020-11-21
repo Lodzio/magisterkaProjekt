@@ -13,4 +13,7 @@ export class AppService {
     return { state: "success" };
     // return this.repository.createLog({ timestamp, valveState });
   }
+  getLogs(id: string) {
+    return [];
+  }
 }

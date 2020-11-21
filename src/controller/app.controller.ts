@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
-import { ApiBody, ApiResponse } from "@nestjs/swagger";
+import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import { ApiBody, ApiQuery, ApiResponse } from "@nestjs/swagger";
 import { AppService } from "../app.service";
 import { PompWaterRequest } from "./request";
-import { PompWaterResponse } from "./response";
+import { GetLogsResponse, PompWaterResponse } from "./response";
 
 @Controller()
 export class AppController {
@@ -10,8 +10,15 @@ export class AppController {
 
   @Post("pompWater")
   @ApiBody({ type: PompWaterRequest })
-  @ApiResponse({ type: PompWaterResponse })
+  @ApiResponse({ status: 201, type: PompWaterResponse })
   async pompWater(@Body() data: PompWaterRequest): Promise<PompWaterResponse> {
     return this.appService.pompWater(data.valveState);
+  }
+
+  @Get("logs")
+  @ApiQuery({ name: "id", type: "string" })
+  @ApiResponse({ status: 200, type: [GetLogsResponse] })
+  async logs(@Query("id") id: string): Promise<GetLogsResponse[]> {
+    return this.appService.getLogs(id);
   }
 }
