@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { Repository } from "./repository/repository";
 import { UARTService } from "./UARTService";
+import { LogsRepository } from "./repository/logsRepository.service";
 
 @Injectable()
 export class AppService {
   constructor(
-    private readonly repository: Repository,
+    private readonly repository: LogsRepository,
     private readonly uartService: UARTService
   ) {}
   pompWater(valveState: number) {
@@ -13,7 +13,7 @@ export class AppService {
     return { state: "success" };
     // return this.repository.createLog({ timestamp, valveState });
   }
-  getLogs(id: string) {
-    return [];
+  getLogs(sensorId: string) {
+    return this.repository.getLogs(sensorId);
   }
 }

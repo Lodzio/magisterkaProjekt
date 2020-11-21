@@ -1,17 +1,22 @@
 import { Module } from "@nestjs/common";
 import { AppController } from "./controller/app.controller";
 import { AppService } from "./app.service";
-import { Repository } from "./repository/repository";
-import { SQLiteRepository } from "./repository/SQLiteRepository";
+import { LogsRepository } from "./repository/logsRepository.service";
 import { UARTService } from "./UARTService";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { LogClassEntity } from "./repository/logClass.entity";
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [
-    AppService,
-    UARTService,
-    { provide: Repository, useClass: SQLiteRepository },
+  imports: [
+    TypeOrmModule.forFeature([LogClassEntity]),
+    TypeOrmModule.forRoot({
+      type: "sqlite",
+      database: "db",
+      entities: [__dirname + "/**/*.entity{.ts,.js}"],
+      synchronize: true,
+    }),
   ],
+  controllers: [AppController],
+  providers: [LogsRepository, AppService, UARTService],
 })
 export class AppModule {}
