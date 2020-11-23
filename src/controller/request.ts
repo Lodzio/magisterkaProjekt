@@ -7,10 +7,3 @@ export class PompWaterRequest {
   @IsNumber()
   valveState: number;
 }
-
-export class GetLogsRequest {
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  id: string;
-}

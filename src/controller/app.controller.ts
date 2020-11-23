@@ -19,6 +19,10 @@ export class AppController {
   @ApiQuery({ name: "id", type: "string" })
   @ApiResponse({ status: 200, type: [GetLogsResponse] })
   async logs(@Query("id") id: string): Promise<GetLogsResponse[]> {
-    return this.appService.getLogs(id);
+    const logs = await this.appService.getLogs(id);
+    return logs
+      .sort((a, b) => b.timestamp - a.timestamp)
+      .slice(0, 200)
+      .map((log) => ({ timestamp: log.timestamp, value: log.value }));
   }
 }
