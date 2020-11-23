@@ -19,7 +19,7 @@ export class UARTService {
     this.serial.write(`f:${valveState}`);
   };
 
-  private onData = (data) => {
+  private onData = async (data) => {
     const partOfMessage = String(data);
     if (partOfMessage.charAt(0) !== "{" && this.message.charAt(0) !== "{") {
       return;
@@ -29,8 +29,8 @@ export class UARTService {
     if (this.message.slice(-1) === "}") {
       try {
         const { s1, s2 } = JSON.parse(this.message);
-        this.repository.createLog(s1, "s1");
-        this.repository.createLog(s2, "s2");
+        await this.repository.createLog(s1, "s1");
+        await this.repository.createLog(s2, "s2");
       } catch (error) {}
       this.message = "";
     }
