@@ -5,6 +5,8 @@ import { LogsRepository } from "./repository/logsRepository.service";
 import { UARTService } from "./UARTService";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { LogClassEntity } from "./repository/logClass.entity";
+import { ServeStaticModule } from "@nestjs/serve-static";
+import { join } from "path";
 
 @Module({
   imports: [
@@ -14,6 +16,9 @@ import { LogClassEntity } from "./repository/logClass.entity";
       database: "db",
       entities: [__dirname + "/**/*.entity{.ts,.js}"],
       synchronize: true,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, "..", "client"),
     }),
   ],
   controllers: [AppController],
