@@ -31,9 +31,7 @@ export class UARTService {
         const { s1, s2 } = JSON.parse(this.message);
         this.repository.createLog(s1, "s1");
         this.repository.createLog(s2, "s2");
-      } catch (error) {
-        console.error(error, this.message);
-      }
+      } catch (error) {}
       this.message = "";
     }
   };
