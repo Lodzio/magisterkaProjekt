@@ -28,7 +28,8 @@ export class UARTService {
     }
     if (this.message.slice(-1) === "}") {
       try {
-        const { s1, s2 } = JSON.parse(this.message);
+        const { s1, s2, error } = JSON.parse(this.message);
+        error && console.log({ error });
         await this.repository.createLog(s1, "s1");
         await this.repository.createLog(s2, "s2");
       } catch (error) {}
