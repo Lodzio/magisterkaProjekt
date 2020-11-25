@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Header,
+  Post,
+  Query,
+  Res,
+} from "@nestjs/common";
 import { ApiBody, ApiQuery, ApiResponse } from "@nestjs/swagger";
 import { AppService } from "../app.service";
 import { PompWaterRequest } from "./request";
@@ -18,6 +26,7 @@ export class AppController {
   @Get("logs")
   @ApiQuery({ name: "id", type: "string" })
   @ApiResponse({ status: 200, type: [GetLogsResponse] })
+  @Header("Cache-Control", "none")
   async logs(@Query("id") id: string): Promise<GetLogsResponse[]> {
     const logs = await this.appService.getLogs(id);
     return logs
