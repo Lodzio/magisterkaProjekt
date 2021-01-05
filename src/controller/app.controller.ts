@@ -29,9 +29,10 @@ export class AppController {
   @Header("Cache-Control", "none")
   async logs(@Query("id") id: string): Promise<GetLogsResponse[]> {
     const logs = await this.appService.getLogs(id);
-    return logs
-      .sort((a, b) => b.timestamp - a.timestamp)
-      .slice(0, 200)
+    const sortedLogs = logs
+      .sort((a, b) => a.timestamp - b.timestamp)
+      .slice(logs.length - 500, logs.length)
       .map((log) => ({ timestamp: log.timestamp, value: log.value }));
+    return this.appService.movingAverage(sortedLogs);
   }
 }
